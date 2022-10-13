@@ -1,0 +1,72 @@
+import random
+
+life = 0
+
+print("Welcome to the Number Guessing Game")
+print("Im thinking a number between 1 and 100.")
+difficulty = input("Choose a difficulty. Type 'easy' or 'hard'. ").lower()
+
+
+def diff_check(diff_input):
+    life_give = 0
+
+    if diff_input == "easy":
+        life_give = 10
+        print(f"You have {life_give} remaining attempts to guess the number.")
+
+    elif diff_input == "hard":
+        life_give = 5
+        print(f"You have {life_give} remaining attempts to guess the number.")
+
+    else:
+        life_give = 0
+
+    return life_give
+
+# Needed to check if wrong input
+life = int(diff_check(difficulty))
+
+if life == 0:
+    diff_check(difficulty)
+
+random_number = random.randint(0, 99)
+
+def life_check(total_life, rand_numb):
+
+    print("Guess again\n")
+    if not total_life > 0:
+        print("\nYou lose. You don't have any remaining attempts left.")
+        print(f"The number to guess is {rand_numb}")
+        return False
+    else:
+        return True
+
+
+
+def random_check(ran_number):
+    is_guess = True
+    global life
+    life_loc = life
+
+    while is_guess:
+
+        guess = int(input("Make a guess: "))
+        if guess < ran_number:
+            print("Too low")
+            life_loc -= 1
+            is_guess = life_check(life_loc, ran_number)
+            print(f"You have {life_loc} remaining attempts to guess the number.")
+
+
+        elif guess > ran_number:
+            print("Too high")
+            life_loc -= 1
+            is_guess = life_check(life_loc, ran_number)
+            print(f"You have {life_loc} remaining attempts to guess the number.")
+
+
+        elif guess == ran_number:
+            print(f"You got it. The answer is {ran_number}")
+            is_guess = False
+
+random_check(random_number)

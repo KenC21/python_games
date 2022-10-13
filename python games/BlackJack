@@ -1,0 +1,113 @@
+import random
+
+set_of_cards = [11, 2, 3, 4, 5, 6, 7, 8, 9, 10, 10, 10, 10]
+
+play = True
+
+
+def logo():
+    return "BLACK JACK"
+
+def blackjack():
+    player_card_random = []
+    computer_card_random = []
+
+    def call_to_play(call):
+        try_again = input("\n\nDo you want to play BlackJack again? Type 'y' or 'n'. ").lower()
+
+        if call == "BlackJack":
+            print("You got a BlackJack. You win the game.")
+            blackjack()
+        elif try_again == "y":
+            blackjack()
+        else:
+            print("\nThanks for playing.")
+
+        return try_again
+
+    def score_checker(total_player, total_computer):
+
+        if total_player == 0:
+            print("\nYou got a BlackJack")
+        if total_computer == 0:
+            print("\nComputer got a BlackJack")
+        if total_player > 21:
+            print("\nYou went over. You lose.")
+        elif total_computer > 21:
+            print("\nComputer went over. You win.")
+        elif total_player == total_computer:
+            print(f"\nYou have the same final score. \n Its a draw.")
+        elif total_player > total_computer:
+            print("\nYou win! You have higher score than computer.")
+        else:
+            print("\nYou lose! You have lower score than computer.")
+
+    def add_card():
+        total_new = 0
+
+        card_new = input("\nType 'y' to get another card, type 'n' to pass: ")
+
+        if card_new == "y":
+            randomize_card_player = random.randint(0, (len(set_of_cards) - 1))
+            player_card_random.append(set_of_cards[randomize_card_player])
+
+        for card in player_card_random:
+            total_new += card
+
+        return total_new
+
+    def card_bothcheck(cards):
+
+        for card in cards:
+            if card == 11 and sum(cards) > 21:
+                cards.remove[card] = 11
+                cards.append[card] = 1
+
+            if sum(cards) == 21:
+                return 0
+        return sum(cards)
+
+    def card_dealer():
+        card_randomizer = True
+        count = 0
+
+        while card_randomizer:
+
+            randomize_card_player = random.randint(0, (len(set_of_cards) - 1))
+            randomize_card_computer = random.randint(0, (len(set_of_cards) - 1))
+            player_card_random.append(set_of_cards[randomize_card_player])
+            computer_card_random.append(set_of_cards[randomize_card_computer])
+
+            count += 1
+            if count == 2:
+                card_randomizer = False
+
+
+
+
+    print(logo())
+    card_dealer()
+    
+    total_card_player = card_bothcheck(player_card_random)
+    total_card_computer = card_bothcheck(computer_card_random)
+    if total_card_player == 0:
+        total_card_player = "BlackJack"
+        call_to_play("BlackJack")
+    elif total_card_computer == 0:
+        total_card_computer = "BlackJack"
+        call_to_play("BlackJack")
+
+    print(f"\nYour card {player_card_random}, current score: {total_card_player}\n")
+    print(f"Computer first card {computer_card_random[0]}\n ")
+
+    total_card_player = add_card()
+    card_bothcheck(player_card_random)
+    card_bothcheck(computer_card_random)
+    score_checker(total_card_player, total_card_computer)
+
+    print(f"\nYour final hand: {player_card_random}, current score: {total_card_player}")
+    print(f"Computer final hand: {computer_card_random}, current score: {total_card_computer}")
+
+    call_to_play(total_card_player)
+
+blackjack()
